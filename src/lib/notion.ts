@@ -140,12 +140,17 @@ const MOCK_WORKS: Work[] = [
 
 // ---------------- Helpers ----------------
 function slugify(title: string, id: string) {
-  const base = title
+  // Prefer ASCII-only slugs so the URL survives encoding layers (Vercel
+  // edge, social share cards, analytics). Strip CJK / symbols; if nothing
+  // ASCII is left, fall back to the bare Notion page ID (hyphens removed).
+  const ascii = title
     .toLowerCase()
-    .replace(/[^\w\u4e00-\u9fa5\s-]/g, "")
+    .replace(/[^\w\s-]/g, "")
+    .replace(/[\u4e00-\u9fa5]/g, "")
     .trim()
     .replace(/\s+/g, "-");
-  return base ? `${base}-${id.slice(0, 6)}` : id.slice(0, 8);
+  const cleanId = id.replace(/-/g, "");
+  return ascii ? `${ascii}-${cleanId.slice(0, 8)}` : cleanId;
 }
 
 // Minimal Notion property shape (only what we access) — avoids pulling in the
