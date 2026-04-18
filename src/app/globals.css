@@ -1,0 +1,100 @@
+@import "tailwindcss";
+
+/* ============================================================
+   Gumtree Creative Studio — Design Tokens
+   Dark cinematic theme. Values mirror CLAUDE.md.
+   ============================================================ */
+
+:root {
+  /* surfaces */
+  --color-bg-base: #0a0a0f;
+  --color-bg-elevated: #141419;
+  --color-bg-overlay: rgba(10, 10, 15, 0.72);
+
+  /* text */
+  --color-fg-primary: #fafafa;
+  --color-fg-muted: #8b8b93;
+  --color-fg-subtle: #5a5a63;
+
+  /* brand */
+  --color-accent: #e8692c; /* Gumtree orange */
+  --color-accent-hover: #ff7a3d;
+  --color-accent-glow: rgba(232, 105, 44, 0.45);
+  --color-secondary: #1e2d5c; /* Gumtree navy */
+
+  /* lines */
+  --color-border: rgba(255, 255, 255, 0.08);
+  --color-border-strong: rgba(255, 255, 255, 0.18);
+
+  /* motion */
+  --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@theme inline {
+  --color-background: var(--color-bg-base);
+  --color-foreground: var(--color-fg-primary);
+  --color-bg-base: var(--color-bg-base);
+  --color-bg-elevated: var(--color-bg-elevated);
+  --color-fg-primary: var(--color-fg-primary);
+  --color-fg-muted: var(--color-fg-muted);
+  --color-fg-subtle: var(--color-fg-subtle);
+  --color-accent: var(--color-accent);
+  --color-accent-hover: var(--color-accent-hover);
+  --color-secondary: var(--color-secondary);
+  --color-border: var(--color-border);
+
+  --font-sans: var(--font-noto-sans-sc), "Helvetica Neue", Arial, sans-serif;
+  --font-display: var(--font-inter-tight), var(--font-noto-sans-sc), sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+}
+
+html,
+body {
+  background: var(--color-bg-base);
+  color: var(--color-fg-primary);
+}
+
+body {
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overscroll-behavior-y: none;
+}
+
+/* hide default cursor on desktop so CustomCursor can take over */
+@media (hover: hover) and (pointer: fine) {
+  html.custom-cursor-enabled,
+  html.custom-cursor-enabled * {
+    cursor: none !important;
+  }
+}
+
+/* subtle selection color */
+::selection {
+  background: var(--color-accent);
+  color: #0a0a0f;
+}
+
+/* fallback film grain for low-power devices (static SVG noise) */
+.static-grain {
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  opacity: 0.06;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+}
+
+/* reduce motion safety */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
