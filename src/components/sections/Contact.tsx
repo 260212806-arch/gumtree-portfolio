@@ -84,6 +84,24 @@ export function Contact() {
         >
           © Gumtree Creative Studio · Gumtree 创意工坊
         </motion.p>
+
+        {/* ICP filing — required by 工信部 to be on the homepage footer and link to beian.miit.gov.cn */}
+        <motion.p
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.6 }}
+          className="mt-3 text-[11px] text-[color:var(--color-fg-subtle)]"
+        >
+          <a
+            href="https://beian.miit.gov.cn/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:text-[color:var(--color-fg-muted)] transition-colors"
+          >
+            沪ICP备2026017647号-1
+          </a>
+        </motion.p>
       </div>
     </section>
   );
